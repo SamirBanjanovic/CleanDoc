@@ -50,8 +50,13 @@ namespace RemoveCRLFFromItems
                         var files = System.IO.Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
                         Parallel.ForEach(files, f =>
                         {
-                            ProcessFile(f, outputPath);
-                        });
+							int status = ProcessFile(f, outputPath);
+
+	                        if(status = -1)
+	                        	Console.WriteLine("Unexpected character during file processing");
+	                        else
+	                        	Console.WriteLine("File prcessing complete");
+	                        });
                     }
                     else
                     {
@@ -71,7 +76,12 @@ namespace RemoveCRLFFromItems
 
                     if (CanProcessFile(path, outputPath))
                     {
-                        ProcessFile(path, outputPath);
+                        int status = ProcessFile(path, outputPath);
+
+                        if(status = -1)
+                        	Console.WriteLine("Unexpected character during file processing");
+                        else
+                        	Console.WriteLine("File prcessing complete");
                     }
                     else
                     {
@@ -85,7 +95,7 @@ namespace RemoveCRLFFromItems
             }
         }
 
-        private static void ProcessFile(string path, string outputPath)
+        private static int ProcessFile(string path, string outputPath)
         {
             var ext = System.IO.Path.GetExtension(path);
             string outputFileName = System.IO.Path.GetFileNameWithoutExtension(path) + "_CLEAN_.txt";
@@ -94,7 +104,7 @@ namespace RemoveCRLFFromItems
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open))
                 {
-                    CleanCopyUsingStateMachine(fs, sw);
+                    return CleanCopyUsingStateMachine(fs, sw);
                 }
             }
         }
@@ -104,12 +114,13 @@ namespace RemoveCRLFFromItems
             return System.IO.File.Exists(inputFile) && System.IO.Directory.Exists(outputPath);
         }
 
-        public static void CleanCopyUsingStateMachine(FileStream fs, StreamWriter sw)
+        public static int CleanCopyUsingStateMachine(FileStream fs, StreamWriter sw)
         {
             int index = 1;
             bool isEOF = false;
             bool toClean = false;
             bool error = false;
+            int finalStatus = 0;
             char c = '\0';
 
             // set stream to beginning
@@ -158,13 +169,15 @@ namespace RemoveCRLFFromItems
                 else if ((error = q == 0) || c == char.MaxValue)
                 {// exit reader...
                     if (error)
-                        Console.WriteLine("Unexpected file structure");
+						finalStatus = -1;
                     else
-                        Console.WriteLine("Processing Complete");
+                        finalStatus = 1;
 
                     isEOF = true;
                 }              
             }// end while
+
+            return finalStatus;
         }// end function     
     }
 }
