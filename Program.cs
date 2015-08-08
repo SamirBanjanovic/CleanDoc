@@ -108,6 +108,8 @@ namespace RemoveCRLFFromItems
         {
             int index = 1;
             bool isEOF = false;
+            bool toClean = false;
+            bool error = false;
             char c = '\0';
 
             // set stream to beginning
@@ -130,9 +132,9 @@ namespace RemoveCRLFFromItems
                     sw.Write(c);
                     q = 2;
                 }
-                else if((q == 1 || q == 3 || q == 4) && Program._itemsToClean.Contains(c))
+                else if((q == 1 || q == 3 || q == 4) && (toClean = Program._itemsToClean.Contains(c)))
                 {// skip ignore values; replace new lines with space...prevents string concatination
-                    if(Program._newLineDelimiters.Contains(c))
+                    if(toClean)
                         sw.Write(" ");
 
                     q = 3;
@@ -153,9 +155,13 @@ namespace RemoveCRLFFromItems
                     sw.Write(c);
                     q = 1;
                 }  
-                else if (q == 0 || c == char.MaxValue)
+                else if ((error = q == 0) || c == char.MaxValue)
                 {// exit reader...
-                    Console.WriteLine("Processing Complete");
+                    if (error)
+                        Console.WriteLine("Unexpected file structure");
+                    else
+                        Console.WriteLine("Processing Complete");
+
                     isEOF = true;
                 }              
             }// end while
