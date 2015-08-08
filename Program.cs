@@ -52,7 +52,7 @@ namespace RemoveCRLFFromItems
                         {
 							int status = ProcessFile(f, outputPath);
 
-	                        if(status = -1)
+	                        if(status == -1)
 	                        	Console.WriteLine("Unexpected character during file processing");
 	                        else
 	                        	Console.WriteLine("File prcessing complete");
@@ -78,7 +78,7 @@ namespace RemoveCRLFFromItems
                     {
                         int status = ProcessFile(path, outputPath);
 
-                        if(status = -1)
+                        if(status == -1)
                         	Console.WriteLine("Unexpected character during file processing");
                         else
                         	Console.WriteLine("File prcessing complete");
