@@ -18,8 +18,8 @@ namespace RemoveCRLFFromItems
             {
 #if DEBUG                
                 
-                string path = @"c:\users\samir\desktop\test.txt";                
-                string outputPath = @"c:\users\samir\desktop\";
+                string path = @"PATH_TO_LOCAL_FILE";                
+                string outputPath = @"OUTPUT_DIRECTORY";
                 bool inParallel = false;                
                 
 #else
@@ -102,19 +102,6 @@ namespace RemoveCRLFFromItems
         private static bool CanProcessFile(string inputFile, string outputPath)
         {
             return System.IO.File.Exists(inputFile) && System.IO.Directory.Exists(outputPath);
-
-            /*
-                if (!System.IO.File.Exists(inputFile))
-                {
-                    Console.WriteLine("\"{0}\" File does not exist!!!", inputFile);
-                    return;
-                }
-                else if (!System.IO.Directory.Exists(outputPath))
-                {
-                    Console.WriteLine("\"{0}\" Directory does not exist!!!", outputPath);
-                    return;
-                }
-            */
         }
 
         public static void CleanCopyUsingStateMachine(FileStream fs, StreamWriter sw)
@@ -168,133 +155,10 @@ namespace RemoveCRLFFromItems
                 }  
                 else if (q == 0 || c == char.MaxValue)
                 {// exit reader...
+                    Console.WriteLine("Processing Complete");
                     isEOF = true;
-                }                              
+                }              
             }// end while
-        }// end function
-
-        /*
-        public static void CreateCleanCopyOfFile(FileStream fs, StreamWriter sw)
-        {
-
-            int index = 0;
-            bool isEOF = false; // is end of file
-            bool isEOL = false; // is end of line
-            char nl = char.MaxValue; // indicates we've read first character of new line
-
-            while (isEOF == false)
-            {
-                isEOL = false;
-                
-                if (nl != char.MaxValue)
-                {
-                    sw.Write(nl);
-                    nl = char.MaxValue;
-                }
-
-                while (isEOL == false)
-                {// read each line
-                    char c = (char)fs.ReadByte();
-
-                    // check if file is empty
-                    if (c == char.MaxValue || c == '\0')
-                    {
-                        isEOF = true;
-                        break;
-                    }
-                    
-                    if (c == '"')
-                    {// check what to do with quote
-                        sw.Write(c);
-                        c = (char)fs.ReadByte();
-
-                        if (c == ',')
-                        {// if it's followed by comma append and read next byte
-                            sw.Write(c);
-                            c = (char)fs.ReadByte();
-                        }
-                        else if (Program._newLineDelimiters.Contains(c)) //  c == '\r' || c == '\n')
-                        {// if quote is followed by 
-                         // new line assume it's end of line
-                            isEOL = true;
-                            break;
-                        }
-                    }
-
-                    while (true)
-                    {
-                        if (c == char.MaxValue || c == '\0')
-                        {// if reading empty bytes exit out
-                            break;
-                        }
-
-                        // check if it's proper closing quote
-                        if (c == '"')
-                        {// add sub-item character to value
-                            sw.Write(c);
-
-                            // looking ,
-                            c = (char)fs.ReadByte();
-
-                            if (c == ',')
-                            {
-                                // write current character to new file
-                                sw.Write(c);
-                                
-                                // read next
-                                c = (char)fs.ReadByte();
-
-                                if (c == '"')
-                                {// if next character is quote then we've closed out quote set; exit loop
-                                    sw.Write(c);
-                                    break;
-                                }// we've met exit criteria
-                                else
-                                {// it's a quote inside quotes, continue reading
-                                    sw.Write(c);
-                                }
-                            }
-                            else if (Program._newLineDelimiters.Contains(c))//c == '\n')
-                            {                                
-                                c = (char)fs.ReadByte();
-
-                                if (Program._newLineDelimiters.Contains(c))//c == '\r')
-                                {
-                                    isEOL = true;
-                                    break; // end of line reached
-                                }
-                                else if (c == '"')
-                                {// reading byte of next line
-                                    isEOL = true;
-                                    nl = c; // memorize first character of next line
-                                    break; // end of line reached; exit loop
-                                }
-                            }
-                            else
-                            {
-                                sw.Write(c);
-                                c = (char)fs.ReadByte();
-                            }
-                        }
-                        // ignore new lines inside quotes
-                        else if (Program._itemsToClean.Contains(c))//c == '\r' || c == '\n')
-                        {// ignore CR LF inside quotes
-                            c = (char)fs.ReadByte();
-                        }
-                        else
-                        {// acceptable character received; copy and continue reading
-                            sw.Write(c);
-                            c = (char)fs.ReadByte();
-                        }
-                    }
-                }
-
-                // close the line
-                sw.Write(Environment.NewLine);
-                Console.WriteLine(++index);      
-                          
-            }// file while
-        }// function
-        */ 
+        }// end function     
     }
 }
