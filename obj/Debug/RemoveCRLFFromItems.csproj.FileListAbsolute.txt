@@ -10,3 +10,9 @@ C:\Users\sbanjanovic\Dropbox\Data Cradle Code\RemoveCRLFFromItems\bin\Debug\Remo
 C:\Users\sbanjanovic\Dropbox\Data Cradle Code\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.exe
 C:\Users\sbanjanovic\Dropbox\Data Cradle Code\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.pdb
 C:\Users\sbanjanovic\Dropbox\Data Cradle Code\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.csprojResolveAssemblyReference.cache
+Z:\src\RemoveCRLFFromItems\bin\Debug\RemoveCRLFFromItems.exe.config
+Z:\src\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.exe
+Z:\src\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.pdb
+Z:\src\RemoveCRLFFromItems\bin\Debug\RemoveCRLFFromItems.exe
+Z:\src\RemoveCRLFFromItems\bin\Debug\RemoveCRLFFromItems.pdb
+Z:\src\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.csprojResolveAssemblyReference.cache
