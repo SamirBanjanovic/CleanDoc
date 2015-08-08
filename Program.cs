@@ -33,7 +33,7 @@ namespace RemoveCRLFFromItems
 
                 string path;
                 string outputPath;
-                bool inParallel = args[0].ToUpper() == "-p";
+                bool inParallel = args[0].ToLower() == "-p";
 
 #endif
 
