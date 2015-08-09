@@ -9,6 +9,7 @@ namespace RemoveCRLFFromItems
 {
     class Program
     {
+    	private const string NEW_LINE_DELIMITER = Environment.NewLine;
         private static readonly char[] _newLineDelimiters = { '\r', '\n' };
         private static readonly char[] _itemsToClean = { '\r', '\n' };
 
@@ -157,7 +158,9 @@ namespace RemoveCRLFFromItems
                 }                     
                 else if (q == 2 && Program._newLineDelimiters.Contains(c))
                 {// reached end of the line
-                    sw.Write(Environment.NewLine);
+
+					sw.Write(Program.NEW_LINE_DELIMITER);
+
                     q = 4;
                     Console.WriteLine(++index);
                 }                     
