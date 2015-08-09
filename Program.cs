@@ -9,7 +9,7 @@ namespace RemoveCRLFFromItems
 {
     class Program
     {
-    	private const string NEW_LINE_DELIMITER = Environment.NewLine;
+    	private const string NEW_LINE_DELIMITER = "\r\n";
         private static readonly char[] _newLineDelimiters = { '\r', '\n' };
         private static readonly char[] _itemsToClean = { '\r', '\n' };
 
