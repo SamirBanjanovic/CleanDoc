@@ -178,7 +178,7 @@ namespace RemoveCRLFFromItems
                 else if ((error = q == 0) || c == char.MaxValue)
                 {// exit reader...
                     if (error)
-						finalStatus = -1;
+					    finalStatus = -1;
                     else
                         finalStatus = 1;
 
