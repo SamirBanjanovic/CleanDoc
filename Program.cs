@@ -105,7 +105,7 @@ namespace RemoveCRLFFromItems
             {
                 using (FileStream fs = new FileStream(path, FileMode.Open))
                 {
-                    return CleanCopyUsingStateMachine(fs, sw);
+                    return ProcessStream(fs, sw);
                 }
             }
         }
@@ -114,8 +114,14 @@ namespace RemoveCRLFFromItems
         {
             return System.IO.File.Exists(inputFile) && System.IO.Directory.Exists(outputPath);
         }
-
-        public static int CleanCopyUsingStateMachine(FileStream fs, StreamWriter sw)
+        /// <summary>
+        /// Reads input stream and removes unwanted items.  Stream processing 
+        /// is done through states
+        /// </summary>
+        /// <param name="fs">Stream reader</param>
+        /// <param name="sw">Stream writer</param>
+        /// <returns>Final state. 1 is success, -1 is failure</returns>
+        public static int ProcessStream(FileStream fs, StreamWriter sw)
         {
             int index = 1;
             bool isEOF = false;
