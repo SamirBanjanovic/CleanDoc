@@ -115,8 +115,7 @@ namespace RemoveCRLFFromItems
             return System.IO.File.Exists(inputFile) && System.IO.Directory.Exists(outputPath);
         }
         /// <summary>
-        /// Reads input stream and removes unwanted items.  Stream processing 
-        /// is done through states
+        /// Reads input stream and removes unwanted items. 
         /// </summary>
         /// <param name="fs">Stream reader</param>
         /// <param name="sw">Stream writer</param>
