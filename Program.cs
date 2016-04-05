@@ -45,20 +45,23 @@ namespace RemoveCRLFFromItems
                     var tmpop = args[2].Replace("\"", string.Empty);
                     outputPath = tmpop.EndsWith("\\") ? tmpop : tmpop + "\\";
 
-                    if (CanProcessFile(path, outputPath))
-                    {
-                        // get list of files
-                        var files = System.IO.Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
-                        Parallel.ForEach(files, f =>
-                        {
-							int status = ProcessFile(f, outputPath);
-
-	                        if(status == -1)
-	                        	Console.WriteLine("Unexpected character during file processing");
-	                        else
-	                        	Console.WriteLine("File prcessing complete");
-	                        });
-                    }
+			if (CanProcessFile(path, outputPath))
+			{
+			// get list of files
+			var files = System.IO.Directory.GetFiles(path, "*", SearchOption.TopDirectoryOnly);
+			Parallel.ForEach(files, f =>
+			{
+				int status = ProcessFile(f, outputPath);
+				
+				if(status == -1)
+				{
+					Console.WriteLine("Unexpected character during file processing");
+				}
+				else
+				{
+					Console.WriteLine("File prcessing complete");
+				});
+			}
                     else
                     {
                         Console.WriteLine("\r\nInvalid paths. \r\nInput File: \"{0}\"\r\nOutput Dir.: \"{1}\"", path, outputPath);
@@ -77,12 +80,16 @@ namespace RemoveCRLFFromItems
 
                     if (CanProcessFile(path, outputPath))
                     {
-                        int status = ProcessFile(path, outputPath);
-
-                        if(status == -1)
-                        	Console.WriteLine("Unexpected character during file processing");
-                        else
-                        	Console.WriteLine("File prcessing complete");
+			int status = ProcessFile(path, outputPath);
+			
+			if(status == -1)
+			{
+				Console.WriteLine("Unexpected character during file processing");
+			}
+			else
+			{
+				Console.WriteLine("File prcessing complete");
+			}
                     }
                     else
                     {
@@ -151,23 +158,23 @@ namespace RemoveCRLFFromItems
                 }
                 else if((q == 1 || q == 3 || q == 4) && (toClean = Program._itemsToClean.Contains(c)))
                 {// skip ignore values; replace new lines with space...prevents string concatination
-                    if(toClean)
-                        sw.Write(" ");
-
-                    q = 3;
+			if(toClean)
+				sw.Write(" ");
+			
+			q = 3;
                 }                
                 else if(q == 2 && c == ',')
                 {// transition back to initial state
-                    sw.Write(c);
-                    q = 0;
+			sw.Write(c);
+			q = 0;
                 }                     
                 else if (q == 2 && Program._newLineDelimiters.Contains(c))
                 {// reached end of the line
 
-					sw.Write(Program.NEW_LINE_DELIMITER);
+			sw.Write(Program.NEW_LINE_DELIMITER);
 
-                    q = 4;
-                    Console.WriteLine(++index);
+			q = 4;
+			Console.WriteLine(++index);
                 }                     
                 else if(q == 1 || q == 2 || q == 3)
                 {// valid character write to file
@@ -176,12 +183,12 @@ namespace RemoveCRLFFromItems
                 }  
                 else if ((error = q == 0) || c == char.MaxValue)
                 {// exit reader...
-                    if (error)
-					    finalStatus = -1;
-                    else
-                        finalStatus = 1;
-
-                    isEOF = true;
+			if (error)
+			    	finalStatus = -1;
+			else
+				finalStatus = 1;
+			
+			isEOF = true;
                 }              
             }// end while
 
