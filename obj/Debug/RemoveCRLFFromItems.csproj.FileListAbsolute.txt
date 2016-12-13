@@ -16,3 +16,6 @@ Z:\src\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.pdb
 Z:\src\RemoveCRLFFromItems\bin\Debug\RemoveCRLFFromItems.exe
 Z:\src\RemoveCRLFFromItems\bin\Debug\RemoveCRLFFromItems.pdb
 Z:\src\RemoveCRLFFromItems\obj\Debug\RemoveCRLFFromItems.csprojResolveAssemblyReference.cache
+C:\git\source\CleanDoc\bin\Debug\RemoveCRLFFromItems.exe.config
+C:\git\source\CleanDoc\obj\Debug\RemoveCRLFFromItems.exe
+C:\git\source\CleanDoc\obj\Debug\RemoveCRLFFromItems.pdb
