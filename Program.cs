@@ -27,15 +27,12 @@ namespace RemoveCRLFFromItems
 
                 var inputPath = args[1]; ;
 
-                var tmpop = args[2].Replace("\"", string.Empty);
-                var outputPath = tmpop.EndsWith("\\") ? tmpop : tmpop + "\\"; ;
+                var tmpo = args[2].Replace("\"", string.Empty);
+                var outputPath = tmpo.EndsWith("\\") ? tmpo : tmpo + "\\"; ;
 
-                var inParallel = args[0].ToLower() == "-p";
-                var canProcess = File.Exists(inputPath) && Directory.Exists(outputPath);
-
-                if (canProcess)
+                if (File.Exists(inputPath) && Directory.Exists(outputPath))
                 {
-                    if (inParallel)
+                    if (args[0].ToLower() == "-p")
                     {
                         var files = Directory.GetFiles(inputPath, "*", SearchOption.TopDirectoryOnly);
                         Parallel.ForEach(files, f =>
