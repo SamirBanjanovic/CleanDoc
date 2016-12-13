@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace RemoveCRLFFromItems
 {
-    class Program
+    public class Program
     {
         private const string NEW_LINE_DELIMITER = "\r\n";
-        private static readonly char[] _newLineDelimiters = { '\r', '\n' };
-        private static readonly char[] _itemsToClean = { '\r', '\n' };
+
+        private static readonly char[] NewLineDelimiters = { '\r', '\n' };
+        private static readonly char[] ItemsToClean = { '\r', '\n' };
 
         static void Main(string[] args)
         {
@@ -69,8 +70,7 @@ namespace RemoveCRLFFromItems
 
         private static int ProcessFile(string path, string outputPath)
         {
-            var ext = System.IO.Path.GetExtension(path);
-            string outputFileName = System.IO.Path.GetFileNameWithoutExtension(path) + "_CLEAN_.txt";
+            var outputFileName = Path.GetFileNameWithoutExtension(path) + "_CLEAN_.txt";
 
             using (var sw = new StreamWriter(outputPath + outputFileName, true))
             {
@@ -94,6 +94,8 @@ namespace RemoveCRLFFromItems
             var index = 1;
             var isEof = false;
             var finalStatus = 0;
+            var toClean = false;
+            var error = false;
             var c = '\0';
 
             // set stream to beginning
@@ -116,7 +118,7 @@ namespace RemoveCRLFFromItems
                     sw.Write(c);
                     q = 2;
                 }
-                else if ((q == 1 || q == 3 || q == 4) && (toClean = Program._itemsToClean.Contains(c)))
+                else if ((q == 1 || q == 3 || q == 4) && (toClean = Program.ItemsToClean.Contains(c)))
                 {// skip ignore values; replace new lines with space...prevents string concatination
                     if (toClean)
                         sw.Write(" ");
@@ -128,7 +130,7 @@ namespace RemoveCRLFFromItems
                     sw.Write(c);
                     q = 0;
                 }
-                else if (q == 2 && Program._newLineDelimiters.Contains(c))
+                else if (q == 2 && Program.NewLineDelimiters.Contains(c))
                 {// reached end of the line
 
                     sw.Write(Program.NEW_LINE_DELIMITER);
